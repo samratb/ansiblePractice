@@ -1,0 +1,22 @@
+---
+# configSysctl.yml
+# modify the /etc/sysctl.conf file 
+- name: Configure sysctl.conf 
+  hosts: all
+  remote_user: sam
+  become: true
+  become_method: sudo
+  become_user: root
+ 
+  tasks:
+    - name: Configure sysctl
+      sysctl:
+        name: "{{ item.name }}" 
+        value: "{{ item.value }}"       
+        state: present
+        reload: yes
+        sysctl_set: yes
+      with_items:
+         - { name: vm.swappiness, value: 1 }
+         - { name: vm.dirty_background_ratio, value: 5 }
+         - { name: vm.dirty_ratio, value: 80 }

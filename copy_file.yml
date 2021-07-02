@@ -1,0 +1,11 @@
+- name: Copy File from Local to Remote
+  hosts: all
+  tasks:
+    - name: Copying files
+      become: true 
+      copy:
+        src: /tmp/testfile02
+        dest: /tmp
+        owner: sam
+        group: sam        
+        mode: 0644
